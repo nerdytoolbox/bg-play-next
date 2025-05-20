@@ -3,7 +3,7 @@ const maxRetries = 5;
 
 export default async function getBGGUserCollection(userName) {
 	for (let attempt = 0; attempt < maxRetries; attempt++) {
-		const response = await fetch(`https://boardgamegeek.com/xmlapi2/collection/?username=${userName}`);
+		const response = await fetch(`https://boardgamegeek.com/xmlapi2/collection/?username=${userName}&excludesubtype=boardgameexpansion`);
 		if (response.status === 200) {
 			const text = await response.text();
 			const parsedDOM = new window.DOMParser().parseFromString(text, 'text/xml')

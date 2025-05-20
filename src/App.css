@@ -1,25 +1,56 @@
-.bg-play-next {
-  .align-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.align-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.align-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.align-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-username {
+  width: 10rem;
+}
+
+.input-number {
+  width: 3rem;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+}
+
+h1 {
+  text-align: center;
+}
+
+.games-table {
+  border-collapse: collapse;
+
+  .game {
+    border-bottom: 1px solid gray;
   }
 
-  .align-horizontal {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
+  .players {
+    width: 4rem;
   }
 
-  .align-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .time {
+    width: 4rem;
   }
 }
 
-
-
-input {
-  width: 20rem;
+@media (min-width: 768px) {
+  .games-table {
+    width: 50%;
+  }
 }
