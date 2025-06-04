@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import getBGGUserCollection from "./util/getBBGUserCollection.js";
+import { Button, TextInput } from "nerdy-lib";
 
 export default function App() {
   const [userNameInput, setUserNameInput] = React.useState("");
 
   const [userName, setUserName] = useState("");
-  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
 
   const [nPlayers, setNPlayers] = useState("")
   const [nMinutes, setNMinutes] = useState("")
@@ -15,11 +17,13 @@ export default function App() {
   }
 
   const handleSearch = async () => {
+    setLoading(true)
     await getBGGUserCollection(userNameInput)
       .then(data => {
         setData(data)
         setUserName(userNameInput)
         setUserNameInput("")
+        setLoading(false)
       })
       .catch(error => alert(error))
   }
@@ -34,12 +38,12 @@ export default function App() {
 
   const filteredData = data.filter(game => {
     if (nPlayers !== "") {
-      if (game.minPlayers > nPlayers || game.maxPlayers < nPlayers) {
+      if (parseInt(game.minPlayers) > nPlayers || parseInt(game.maxPlayers) < nPlayers) {
         return false;
       }
     }
     if (nMinutes !== "") {
-      if (game.minPlayTime > nMinutes || game.maxPlayTime < nMinutes) {
+      if (parseInt(game.minPlayTime) > nMinutes) {
         return false;
       }
     }
@@ -48,9 +52,12 @@ export default function App() {
 
   return (
     <div className="align-vertical align-center">
+      <div className="align-center block">
+        Enter your BGG username to search for games in your collection. You can filter the results by number of players and time available to see what games you could play.
+      </div>
       <div className="align-horizontal align-center">
-        <input className="input-username" placeholder="BGG username" value={userNameInput} onChange={handleUserNameChange} />
-        <button onClick={handleSearch}>Search</button>
+        <TextInput extraClassNames="input-username" placeholder="BGG username" value={userNameInput} onChange={handleUserNameChange} />
+        <Button size="size2" color="blue" shade1="shade3" onClick={handleSearch}>Search</Button>
       </div>
       <div className="align-vertical align-center">
         <div className="align-horizontal">
@@ -64,6 +71,8 @@ export default function App() {
         </div>
       </div>
       <h1>{userName}</h1>
+      {loading && <div>Loading data...</div>}
+      {data.length > 0 && filteredData.length === 0 && <div>There are no games in your collection fitting with the number of players and time given.</div>}
       {filteredData.length > 0 && (
         <table className="games-table">
           <tr>
