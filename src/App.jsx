@@ -51,46 +51,52 @@ export default function App() {
   })
 
   return (
-    <div className="align-vertical align-center">
-      <div className="align-center block">
-        Enter your BGG username to search for games in your collection. You can filter the results by number of players and time available to see what games you could play.
-      </div>
-      <div className="align-horizontal align-center">
-        <TextInput extraClassNames="input-username" placeholder="BGG username" value={userNameInput} onChange={handleUserNameChange} />
-        <Button size="size2" color="blue" shade1="shade3" onClick={handleSearch}>Search</Button>
+    <div className="bg-play-next-container">
+      <div className="bg-play-next-title">
+        <img className="title-icon" src="bggThumbnail.png" alt="BGG Logo" />
+        <div className="title-text">BOARDGAMES - WHAT TO PLAY NEXT?</div>
       </div>
       <div className="align-vertical align-center">
-        <div className="align-horizontal">
-          <span>How many players are playing?</span>
-          <input className="input-number" type="number" min={0} value={nPlayers} onChange={handlePlayerChange} />
+        <div className="align-center block">
+          Enter your BGG username to search for games in your collection. You can filter the results by number of players and time available to see what games you could play.
         </div>
-        <div className="align-horizontal">
-          <span>How much time do you have?</span>
-          <input className="input-number" type="number" min={0} value={nMinutes} onChange={handleTimeChange} />
-          <span>min</span>
+        <div className="align-horizontal align-center">
+          <TextInput extraClassNames="input-username" placeholder="BGG username" value={userNameInput} onChange={handleUserNameChange} />
+          <Button size="size2" color="blue" shade1="shade3" onClick={handleSearch}>Search</Button>
         </div>
+        <div className="align-vertical align-center">
+          <div className="align-horizontal">
+            <span>How many players are playing?</span>
+            <input className="input-number" type="number" min={0} value={nPlayers} onChange={handlePlayerChange} />
+          </div>
+          <div className="align-horizontal">
+            <span>How much time do you have?</span>
+            <input className="input-number" type="number" min={0} value={nMinutes} onChange={handleTimeChange} />
+            <span>min</span>
+          </div>
+        </div>
+        <h1>{userName}</h1>
+        {loading && <div>Loading data...</div>}
+        {data.length > 0 && filteredData.length === 0 && <div>There are no games in your collection fitting with the number of players and time given.</div>}
+        {filteredData.length > 0 && (
+          <table className="games-table">
+            <tr>
+              <th>Name</th>
+              <th>Players</th>
+              <th>Duration (minutes)</th>
+            </tr>
+            {filteredData.map(game => {
+              return (
+                <tr key={game.id}>
+                  <td className="game name">{game.name}</td>
+                  <td className="game players">{game.minPlayers} - {game.maxPlayers}</td>
+                  <td className="game time">{game.minPlayTime} - {game.maxPlayTime}</td>
+                </tr>
+              )
+            })}
+          </table>
+        )}
       </div>
-      <h1>{userName}</h1>
-      {loading && <div>Loading data...</div>}
-      {data.length > 0 && filteredData.length === 0 && <div>There are no games in your collection fitting with the number of players and time given.</div>}
-      {filteredData.length > 0 && (
-        <table className="games-table">
-          <tr>
-            <th>Name</th>
-            <th>Players</th>
-            <th>Duration (minutes)</th>
-          </tr>
-          {filteredData.map(game => {
-            return (
-              <tr key={game.id}>
-                <td className="game name">{game.name}</td>
-                <td className="game players">{game.minPlayers} - {game.maxPlayers}</td>
-                <td className="game time">{game.minPlayTime} - {game.maxPlayTime}</td>
-              </tr>
-            )
-          })}
-        </table>
-      )}
     </div>
   )
 }

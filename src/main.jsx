@@ -14,7 +14,7 @@ const getFooter = () => {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Hub title="Boardgames: What to play next?" footer={getFooter()}>
+    <Hub footer={getFooter()}>
       <App />
     </Hub>
   </StrictMode>,
