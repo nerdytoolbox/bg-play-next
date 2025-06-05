@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import getBGGUserCollection from "./util/getBBGUserCollection.js";
-import { Button, TextInput } from "nerdy-lib";
+import { Button, TextInput, Title } from "nerdy-lib";
 
 export default function App() {
   const [userNameInput, setUserNameInput] = React.useState("");
@@ -52,10 +52,7 @@ export default function App() {
 
   return (
     <div className="bg-play-next-container">
-      <div className="bg-play-next-title">
-        <img className="title-icon" src="bggThumbnail.png" alt="BGG Logo" />
-        <div className="title-text">BOARDGAMES - WHAT TO PLAY NEXT?</div>
-      </div>
+      <Title icon="bggThumbnail.png" text="Boardgames - What to play next?" />
       <div className="align-vertical align-center">
         <div className="align-center block">
           Enter your BGG username to search for games in your collection. You can filter the results by number of players and time available to see what games you could play.
