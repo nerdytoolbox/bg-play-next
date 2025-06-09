@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import './App.css'
+import './App.scss'
 import { Hub } from "nerdy-lib";
 
 const getFooter = () => {

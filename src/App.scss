@@ -1,3 +1,5 @@
+@use 'nerdy-lib/src/mixins' as mixins;
+
 .align-vertical {
   display: flex;
   flex-direction: column;
@@ -36,6 +38,10 @@ h1 {
 .games-table {
   border-collapse: collapse;
 
+  @include mixins.desktop {
+    width: 50%;
+  }
+
   .game {
     border-bottom: 1px solid gray;
   }
@@ -58,11 +64,5 @@ h1 {
   a, a:hover, a:active {
     color: var(--gray);
     text-decoration: none;
-  }
-}
-
-@media (min-width: 768px) {
-  .games-table {
-    width: 50%;
   }
 }
