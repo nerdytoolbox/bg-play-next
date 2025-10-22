@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './App.scss'
 import { Hub } from "nerdy-lib";
+import { CookieModal } from "nerdy-lib";
 
 const getFooter = () => {
   return (
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Hub footer={getFooter()}>
       <App />
+	    <CookieModal />
     </Hub>
   </StrictMode>,
 )

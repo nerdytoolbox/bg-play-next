@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import getBGGUserCollection from "./util/getBBGUserCollection.js";
 import { Button, TextInput, Title } from "nerdy-lib";
+import { useAnalyticsConsent } from "nerdy-lib";
 
 export default function App() {
+	useAnalyticsConsent()
   const [userNameInput, setUserNameInput] = React.useState("");
 
   const [userName, setUserName] = useState("");
