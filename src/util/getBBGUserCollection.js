@@ -3,7 +3,12 @@ const maxRetries = 5;
 
 export default async function getBGGUserCollection(userName) {
 	for (let attempt = 0; attempt < maxRetries; attempt++) {
-		const response = await fetch(`https://boardgamegeek.com/xmlapi2/collection/?username=${userName}&excludesubtype=boardgameexpansion`);
+		const response = await fetch(`https://boardgamegeek.com/xmlapi2/collection/?username=${userName}&excludesubtype=boardgameexpansion`,
+			{
+				headers: {
+					'Authorization': `Bearer 894e37a4-a4fe-43d7-8f97-523fcbd92220`
+				}
+			});
 		if (response.status === 200) {
 			const text = await response.text();
 			const parsedDOM = new window.DOMParser().parseFromString(text, 'text/xml')
@@ -17,7 +22,8 @@ export default async function getBGGUserCollection(userName) {
 				minPlayers: item.getElementsByTagName("stats")[0]?.getAttribute("minplayers") ?? "",
 				maxPlayers: item.getElementsByTagName("stats")[0]?.getAttribute("maxplayers") ?? "",
 				minPlayTime: item.getElementsByTagName("stats")[0]?.getAttribute("minplaytime") ?? "",
-				maxPlayTime: item.getElementsByTagName("stats")[0]?.getAttribute("maxplaytime") ?? ""
+				maxPlayTime: item.getElementsByTagName("stats")[0]?.getAttribute("maxplaytime") ?? "",
+
 			}))
 		}
 		if (response.status !== 202) {

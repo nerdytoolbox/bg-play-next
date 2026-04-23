@@ -56,9 +56,7 @@ export default function App() {
     <div className="bg-play-next-container">
       <Title icon="bggThumbnail.png" text="Boardgames - What to play next?" />
       <div className="align-vertical align-center">
-        <div className="align-center block">
-          Enter your BGG username to search for games in your collection. You can filter the results by number of players and time available to see what games you could play.
-        </div>
+        <img src="poweredByBGG.webp" alt="Powered by BoardGameGeek" />
         <div className="align-horizontal align-center">
           <TextInput extraClassNames="input-username" placeholder="BGG username" value={userNameInput} onChange={handleUserNameChange} />
           <Button size="size2" color="blue" shade1="shade3" onClick={handleSearch}>Search</Button>
