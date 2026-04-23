@@ -52,6 +52,8 @@ export default function App() {
     return true
   })
 
+	console.log(data)
+
   return (
     <div className="bg-play-next-container">
       <Title icon="bggThumbnail.png" text="Boardgames - What to play next?" />
