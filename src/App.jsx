@@ -14,6 +14,7 @@ export default function App() {
 
 	const [storageData, setStorageData] = useState(JSON.parse(localStorage.getItem(BG_PLAY_NEXT_STORAGE_KEY) || JSON.stringify(EMPTY_GAME_STATE)))
 	const [userName, setUserName] = useState("")
+	const [fetchDate, setFetchDate] = useState("")
 	const [bggData, setBggData] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [nPlayers, setNPlayers] = useState("")
@@ -24,6 +25,7 @@ export default function App() {
 		const currentPlayer = getCurrentPlayer(storageData)
 		setUserName(currentPlayer.name)
 		setBggData(currentPlayer.data)
+		setFetchDate(currentPlayer.fetchDate)
 	}, [])
 
 	// Persist storage data to localStorage whenever it changes
@@ -35,6 +37,7 @@ export default function App() {
   const handleUserNameChange = (e) => {
     setUserName(e.target.value)
 		setBggData([])
+	  setFetchDate("")
   }
 
 	const handlePlayerAmountChange = (e) => {
@@ -67,6 +70,7 @@ export default function App() {
         <SearchSection
           userName={userName}
           onUserNameChange={handleUserNameChange}
+          fetchDate={fetchDate}
           onSearch={handleSearch}
         />
         <FilterSection

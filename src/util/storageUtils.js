@@ -27,10 +27,11 @@ export function updatePlayerData(storageData, userName, bggData) {
     // Player exists, update their data
     newStorageData.currentPlayerId = playerIndex;
     newStorageData.players[playerIndex].data = bggData;
+		newStorageData.players[playerIndex].fetchDate = new Date().toISOString().split('T')[0];
   } else {
     // Player doesn't exist, create a new player
     newStorageData.currentPlayerId = newStorageData.players.length;
-    newStorageData.players.push({ name: userName, data: bggData });
+    newStorageData.players.push({ name: userName, data: bggData, fetchDate: new Date().toISOString().split('T')[0] });
   }
 
   return newStorageData;
