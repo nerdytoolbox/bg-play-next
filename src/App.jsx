@@ -78,7 +78,7 @@ export default function App() {
         <h1>{userName}</h1>
         {loading && <LoadingState />}
         {bggData.length > 0 && filteredData.length === 0 && <NoGamesMessage />}
-        {filteredData.length > 0 && <GamesTable games={filteredData} />}
+        {filteredData.length > 0 && <GamesTable games={filteredData} nPlayers={nPlayers} />}
       </div>
     </div>
   )
