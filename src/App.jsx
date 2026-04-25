@@ -8,6 +8,7 @@ import SearchSection from "./components/SearchSection.jsx";
 import FilterSection from "./components/FilterSection.jsx";
 import GamesTable from "./components/GamesTable.jsx";
 import { LoadingState, NoGamesMessage } from "./components/StateMessages.jsx";
+import GamesCards from "./components/GamesCards/GamesCards.jsx";
 
 export default function App() {
 	useAnalyticsConsent()
@@ -95,7 +96,7 @@ export default function App() {
         <h2>{userName}</h2>
         {loading && <LoadingState />}
         {bggData.length > 0 && filteredData.length === 0 && <NoGamesMessage />}
-        {filteredData.length > 0 && <GamesTable games={filteredData} nPlayers={nPlayers} />}
+        {filteredData.length > 0 && <GamesCards games={filteredData} nPlayers={nPlayers} />}
       </div>
     </div>
   )
