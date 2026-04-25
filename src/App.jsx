@@ -16,6 +16,7 @@ export default function App() {
 	const [userName, setUserName] = useState("")
 	const [fetchDate, setFetchDate] = useState("")
 	const [bggData, setBggData] = useState([])
+	const [isCachedPlayer, setIsCachedPlayer] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [nPlayers, setNPlayers] = useState("")
 	const [nMinutes, setNMinutes] = useState("")
@@ -23,9 +24,18 @@ export default function App() {
 	// Initialize user data from storage
 	useEffect(() => {
 		const currentPlayer = getCurrentPlayer(storageData)
-		setUserName(currentPlayer.name)
-		setBggData(currentPlayer.data)
-		setFetchDate(currentPlayer.fetchDate)
+		if (currentPlayer) {
+			setUserName(currentPlayer.name)
+			setBggData(currentPlayer.data)
+			setFetchDate(currentPlayer.fetchDate)
+			setIsCachedPlayer(true)
+		} else {
+			setUserName("")
+			setBggData([])
+			setFetchDate(null)
+			setIsCachedPlayer(false)
+		}
+
 	}, [])
 
 	// Persist storage data to localStorage whenever it changes
@@ -37,7 +47,8 @@ export default function App() {
   const handleUserNameChange = (e) => {
     setUserName(e.target.value)
 		setBggData([])
-	  setFetchDate("")
+	  setFetchDate(null)
+	  setIsCachedPlayer(false)
   }
 
 	const handlePlayerAmountChange = (e) => {
@@ -66,11 +77,13 @@ export default function App() {
   return (
     <div className="bg-play-next-container">
       <Title icon="bggThumbnail.png" text="Boardgames - What to play next?" />
-      <div className="align-vertical align-center">
+	    <div className="align-vertical align-center">
+		    <img src="poweredByBGG.webp" alt="Powered by BoardGameGeek" />
         <SearchSection
           userName={userName}
           onUserNameChange={handleUserNameChange}
           fetchDate={fetchDate}
+          isCachedPlayer={isCachedPlayer}
           onSearch={handleSearch}
         />
         <FilterSection

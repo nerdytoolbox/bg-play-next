@@ -5,7 +5,7 @@
  */
 export function getCurrentPlayer(storageData) {
   if (storageData.currentPlayerId === null) {
-    return { name: "", data: [] };
+    return null
   }
   return storageData.players[storageData.currentPlayerId];
 }
