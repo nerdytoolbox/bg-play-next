@@ -92,7 +92,7 @@ export default function App() {
           nMinutes={nMinutes}
           onTimeChange={handleTimeChange}
         />
-        <h1>{userName}</h1>
+        <h2>{userName}</h2>
         {loading && <LoadingState />}
         {bggData.length > 0 && filteredData.length === 0 && <NoGamesMessage />}
         {filteredData.length > 0 && <GamesTable games={filteredData} nPlayers={nPlayers} />}
