@@ -18,12 +18,9 @@
   align-items: center;
 }
 
-.input-username {
-  width: 10rem;
-}
-
-.input-number {
-  width: 3rem;
+input {
+  height: 1.2rem;
+  font-size: 1rem;
 }
 
 th {
@@ -35,8 +32,33 @@ h2 {
   text-align: center;
 }
 
+.search-section {
+  .input-username {
+	width: 10rem;
+  }
+
+  .input-number {
+	width: 3rem;
+  }
+
+  .fetch-date {
+	margin-top: 0.2rem;
+	font-size: 0.8rem;
+	color: var(--gray);
+  }
+}
+
 .filter-section {
   margin-top: 0.5rem;
+  font-size: 1rem;
+
+  input {
+	width: 2rem;
+  }
+
+  .input-game-name {
+	width: 15rem;
+  }
 }
 
 .games-table {

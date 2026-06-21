@@ -21,6 +21,7 @@ export default function App() {
 	const [loading, setLoading] = useState(false)
 	const [nPlayers, setNPlayers] = useState("")
 	const [nMinutes, setNMinutes] = useState("")
+	const [gameName, setGameName] = useState("")
 
 	// Initialize user data from storage
 	useEffect(() => {
@@ -53,11 +54,15 @@ export default function App() {
   }
 
 	const handlePlayerAmountChange = (e) => {
-		setNPlayers(e.target.value)
+		setNPlayers(e.target.value.replace(/\D/g, ""))
 	}
 
 	const handleTimeChange = (e) => {
-		setNMinutes(e.target.value)
+		setNMinutes(e.target.value.replace(/\D/g, ""))
+	}
+
+	const handleGameNameChange = (e) => {
+		setGameName(e.target.value)
 	}
 
   const handleSearch = async () => {
@@ -74,7 +79,7 @@ export default function App() {
     }
   }
 
-  const filteredData = filterGames(bggData, nPlayers, nMinutes)
+  const filteredData = filterGames(bggData, nPlayers, nMinutes, gameName)
 
   return (
     <div className="bg-play-next-container">
@@ -93,6 +98,8 @@ export default function App() {
           onPlayerChange={handlePlayerAmountChange}
           nMinutes={nMinutes}
           onTimeChange={handleTimeChange}
+          gameName={gameName}
+          onGameNameChange={handleGameNameChange}
         />
         <h2>{userName}</h2>
         {loading && <LoadingState />}

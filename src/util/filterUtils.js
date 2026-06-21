@@ -5,9 +5,14 @@
  * @param {string} nMinutes - Play time in minutes (empty string to skip filter)
  * @returns {Array} Filtered games array
  */
-export function filterGames(games, nPlayers, nMinutes) {
+export function filterGames(games, nPlayers, nMinutes, gameName) {
   const filteredGames = games.filter(game => {
-    // Filter out games that cannot be played with the number of players or time entered
+    // Filter out games that do not match the gameName
+	  if (!game.name.toLocaleLowerCase().includes(gameName.toLocaleLowerCase())) {
+			return false;
+	  }
+
+		// Filter out games that cannot be played with the number of players or time entered
 		if (nPlayers !== "") {
       if (parseInt(game.minPlayers) > nPlayers || parseInt(game.maxPlayers) < nPlayers) {
         return false;
