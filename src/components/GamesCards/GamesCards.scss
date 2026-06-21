@@ -5,12 +5,12 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  .game-card {
+	.game-card {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
-	height: 15rem;
+	min-height: 15rem;
 	width: 15rem;
 	border-radius: 0.5rem;
 	border: 0.2rem solid #FF5200;
@@ -23,7 +23,7 @@
 
 	@include mixins.mobile {
 	  width: 8rem;
-	  height: 8rem;
+	  min-height: 8rem;
 	  margin: 0.5rem;
 	  padding: 0.25rem;
 	}

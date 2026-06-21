@@ -106,10 +106,26 @@ h2 {
   gap: 20px;
   padding: 20px;
   flex-wrap: wrap;
-  border-bottom: 1px solid #eee;
 
   @include mixins.mobile {
     padding: 15px 10px;
     gap: 10px;
   }
 }
+
+.player-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  h2 {
+    margin: 0;
+  }
+
+  @include mixins.mobile {
+    gap: 10px;
+  }
+}
+

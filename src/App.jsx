@@ -108,14 +108,6 @@ export default function App() {
     <div className="bg-play-next-container">
       <div className="header-with-tabs">
         <Title icon="bggThumbnail.png" text="Boardgames - What to play next?" />
-        {bggData.length > 0 && (
-          <GameViewTabs
-            currentView={currentGameView}
-            onViewChange={setCurrentGameView}
-            favoriteCount={favoriteCount}
-            unwantedCount={unwantedCount}
-          />
-        )}
       </div>
 	    <div className="align-vertical align-center">
 		    <img src="poweredByBGG.webp" alt="Powered by BoardGameGeek" />
@@ -134,7 +126,17 @@ export default function App() {
           gameName={gameName}
           onGameNameChange={handleGameNameChange}
         />
-        <h2>{userName}</h2>
+        <div className="player-header">
+          <h2>{userName}</h2>
+          {bggData.length > 0 && (
+            <GameViewTabs
+              currentView={currentGameView}
+              onViewChange={setCurrentGameView}
+              favoriteCount={favoriteCount}
+              unwantedCount={unwantedCount}
+            />
+          )}
+        </div>
         {loading && <LoadingState />}
 		{bggData.length > 0 && (
 			<>
