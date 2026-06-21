@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Title, useAnalyticsConsent } from "nerdy-lib";
 import getBGGUserCollection from "./util/getBBGUserCollection.js";
-import { BG_PLAY_NEXT_STORAGE_KEY, EMPTY_GAME_STATE } from "./util/constants.js";
+import { BG_PLAY_NEXT_STORAGE_KEY, EMPTY_GAME_STATE, GAME_VIEW_TYPES } from "./util/constants.js";
 import { filterGames } from "./util/filterUtils.js";
-import { getCurrentPlayer, updatePlayerData } from "./util/storageUtils.js";
+import { getCurrentPlayer, updatePlayerData, toggleGameFavorite, toggleGameUnwanted } from "./util/storageUtils.js";
 import SearchSection from "./components/SearchSection.jsx";
 import FilterSection from "./components/FilterSection.jsx";
-import GamesTable from "./components/GamesTable.jsx";
 import { LoadingState, NoGamesMessage } from "./components/StateMessages.jsx";
 import GamesCards from "./components/GamesCards/GamesCards.jsx";
+import GameViewTabs from "./components/GameViewTabs.jsx";
 
 export default function App() {
 	useAnalyticsConsent()
@@ -22,6 +22,7 @@ export default function App() {
 	const [nPlayers, setNPlayers] = useState("")
 	const [nMinutes, setNMinutes] = useState("")
 	const [gameName, setGameName] = useState("")
+	const [currentGameView, setCurrentGameView] = useState(GAME_VIEW_TYPES.ALL)
 
 	// Initialize user data from storage
 	useEffect(() => {
@@ -38,7 +39,7 @@ export default function App() {
 			setIsCachedPlayer(false)
 		}
 
-	}, [])
+	}, [storageData])
 
 	// Persist storage data to localStorage whenever it changes
 	useEffect(() => {
@@ -48,7 +49,7 @@ export default function App() {
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value)
-		setBggData([])
+	setBggData([])
 	  setFetchDate(null)
 	  setIsCachedPlayer(false)
   }
@@ -71,7 +72,7 @@ export default function App() {
       const bggData = await getBGGUserCollection(userName)
       const newStorageData = updatePlayerData(storageData, userName, bggData)
       setStorageData(newStorageData)
-	    setFetchDate(getCurrentPlayer(storageData).fetchDate)
+	    setFetchDate(getCurrentPlayer(newStorageData).fetchDate)
       setLoading(false)
     } catch (error) {
       alert(error)
@@ -79,11 +80,43 @@ export default function App() {
     }
   }
 
+	const handleToggleFavorite = (gameId) => {
+		const newStorageData = toggleGameFavorite(storageData, gameId)
+		setStorageData(newStorageData)
+	}
+
+	const handleToggleUnwanted = (gameId) => {
+		const newStorageData = toggleGameUnwanted(storageData, gameId)
+		setStorageData(newStorageData)
+	}
+
   const filteredData = filterGames(bggData, nPlayers, nMinutes, gameName)
+  const currentPlayer = getCurrentPlayer(storageData)
+
+	// Filter games based on the current view
+	let displayedGames = filteredData
+	if (currentGameView === GAME_VIEW_TYPES.FAVORITES && currentPlayer?.favorites) {
+		displayedGames = filteredData.filter(game => currentPlayer.favorites.includes(game.id))
+	} else if (currentGameView === GAME_VIEW_TYPES.UNWANTED && currentPlayer?.unwanted) {
+		displayedGames = filteredData.filter(game => currentPlayer.unwanted.includes(game.id))
+	}
+
+	const favoriteCount = currentPlayer?.favorites?.length || 0
+	const unwantedCount = currentPlayer?.unwanted?.length || 0
 
   return (
     <div className="bg-play-next-container">
-      <Title icon="bggThumbnail.png" text="Boardgames - What to play next?" />
+      <div className="header-with-tabs">
+        <Title icon="bggThumbnail.png" text="Boardgames - What to play next?" />
+        {bggData.length > 0 && (
+          <GameViewTabs
+            currentView={currentGameView}
+            onViewChange={setCurrentGameView}
+            favoriteCount={favoriteCount}
+            unwantedCount={unwantedCount}
+          />
+        )}
+      </div>
 	    <div className="align-vertical align-center">
 		    <img src="poweredByBGG.webp" alt="Powered by BoardGameGeek" />
         <SearchSection
@@ -103,9 +136,21 @@ export default function App() {
         />
         <h2>{userName}</h2>
         {loading && <LoadingState />}
-        {bggData.length > 0 && filteredData.length === 0 && <NoGamesMessage />}
-        {filteredData.length > 0 && <GamesCards games={filteredData} nPlayers={nPlayers} />}
-      </div>
+		{bggData.length > 0 && (
+			<>
+				{displayedGames.length === 0 && <NoGamesMessage />}
+				{displayedGames.length > 0 && (
+					<GamesCards 
+						games={displayedGames} 
+						nPlayers={nPlayers}
+						currentPlayer={currentPlayer}
+						onToggleFavorite={handleToggleFavorite}
+						onToggleUnwanted={handleToggleUnwanted}
+					/>
+				)}
+			</>
+		)}
+       </div>
     </div>
   )
 }

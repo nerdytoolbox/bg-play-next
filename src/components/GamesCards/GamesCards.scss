@@ -28,6 +28,77 @@
 	  padding: 0.25rem;
 	}
 
+	.game-card-header {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  gap: 0.3rem;
+	  width: 100%;
+	  margin-bottom: 0.3rem;
+
+	  @include mixins.mobile {
+		gap: 0.15rem;
+		margin-bottom: 0.15rem;
+	  }
+
+	  .game-name {
+		font-weight: bold;
+		flex: 1;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align: left;
+		font-size: 0.9rem;
+
+		@include mixins.mobile {
+		  font-size: 0.7rem;
+		}
+	  }
+
+	  .game-actions {
+		display: flex;
+		gap: 0.2rem;
+		flex-shrink: 0;
+
+		@include mixins.mobile {
+		  gap: 0.1rem;
+		}
+
+		.action-button {
+		  padding: 0.3rem;
+		  border: 1px solid #ddd;
+		  background-color: #f5f5f5;
+		  color: #333;
+		  border-radius: 3px;
+		  cursor: pointer;
+		  font-size: 0.85rem;
+		  transition: all 0.2s ease;
+		  min-width: 2rem;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+
+		  @include mixins.mobile {
+			padding: 0.2rem;
+			font-size: 0.75rem;
+			min-width: 1.6rem;
+		  }
+
+		  &:hover {
+			border-color: #999;
+			background-color: #e8e8e8;
+			transform: scale(1.1);
+		  }
+
+		  &.active {
+			border-color: #333;
+			background-color: #333;
+			color: white;
+		  }
+		}
+	  }
+	}
+
 	.img-container {
 	  display: flex;
 	  justify-content: center;
@@ -51,16 +122,6 @@
 		  max-height: 5rem;
 		}
 	  }
-	}
-
-	.game-name {
-	  font-weight: bold;
-	  margin-bottom: 0.5rem;
-	  width: 100%;
-	  white-space: nowrap;
-	  overflow: hidden;
-	  text-overflow: ellipsis;
-	  text-align: center;
 	}
 
 	.recommends-stats {

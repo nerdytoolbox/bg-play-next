@@ -93,3 +93,23 @@ h2 {
     text-decoration: none;
   }
 }
+
+.bg-play-next-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-with-tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #eee;
+
+  @include mixins.mobile {
+    padding: 15px 10px;
+    gap: 10px;
+  }
+}
