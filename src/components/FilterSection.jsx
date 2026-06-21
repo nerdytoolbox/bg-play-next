@@ -22,6 +22,7 @@ export default function FilterSection({ nPlayers, onPlayerChange, onGameNameChan
       </div>
 	    <div className="align-horizontal">
 		    <input
+			    type="search"
 			    className="input-game-name"
 			    placeholder={"Search for a game..."}
 			    value={gameName}
