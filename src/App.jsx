@@ -66,6 +66,7 @@ export default function App() {
       const bggData = await getBGGUserCollection(userName)
       const newStorageData = updatePlayerData(storageData, userName, bggData)
       setStorageData(newStorageData)
+	    setFetchDate(getCurrentPlayer(storageData).fetchDate)
       setLoading(false)
     } catch (error) {
       alert(error)
