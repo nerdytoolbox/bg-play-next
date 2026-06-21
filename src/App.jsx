@@ -99,6 +99,9 @@ export default function App() {
 		displayedGames = filteredData.filter(game => currentPlayer.favorites.includes(game.id))
 	} else if (currentGameView === GAME_VIEW_TYPES.UNWANTED && currentPlayer?.unwanted) {
 		displayedGames = filteredData.filter(game => currentPlayer.unwanted.includes(game.id))
+	} else {
+		// In ALL view, exclude unwanted games
+		displayedGames = filteredData.filter(game => !currentPlayer?.unwanted?.includes(game.id))
 	}
 
 	const favoriteCount = currentPlayer?.favorites?.length || 0
