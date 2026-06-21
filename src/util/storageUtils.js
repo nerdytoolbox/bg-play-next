@@ -44,7 +44,7 @@ export function updatePlayerData(storageData, userName, bggData) {
 }
 
 /**
- * Toggles a game as favorite
+ * Toggles a game as favorite (and removes from unwanted if present)
  * @param {Object} storageData - Current storage data
  * @param {number} gameId - Game ID
  * @returns {Object} Updated storage data
@@ -56,19 +56,29 @@ export function toggleGameFavorite(storageData, gameId) {
   if (!player.favorites) {
     player.favorites = [];
   }
+  if (!player.unwanted) {
+    player.unwanted = [];
+  }
   
-  const index = player.favorites.indexOf(gameId);
-  if (index > -1) {
-    player.favorites.splice(index, 1);
+  const favIndex = player.favorites.indexOf(gameId);
+  const unwantedIndex = player.unwanted.indexOf(gameId);
+  
+  if (favIndex > -1) {
+    // Remove from favorites
+    player.favorites.splice(favIndex, 1);
   } else {
+    // Add to favorites and remove from unwanted if present
     player.favorites.push(gameId);
+    if (unwantedIndex > -1) {
+      player.unwanted.splice(unwantedIndex, 1);
+    }
   }
   
   return newStorageData;
 }
 
 /**
- * Toggles a game as unwanted
+ * Toggles a game as unwanted (and removes from favorites if present)
  * @param {Object} storageData - Current storage data
  * @param {number} gameId - Game ID
  * @returns {Object} Updated storage data
@@ -77,15 +87,25 @@ export function toggleGameUnwanted(storageData, gameId) {
   const newStorageData = JSON.parse(JSON.stringify(storageData));
   const player = newStorageData.players[newStorageData.currentPlayerId];
   
+  if (!player.favorites) {
+    player.favorites = [];
+  }
   if (!player.unwanted) {
     player.unwanted = [];
   }
   
-  const index = player.unwanted.indexOf(gameId);
-  if (index > -1) {
-    player.unwanted.splice(index, 1);
+  const favIndex = player.favorites.indexOf(gameId);
+  const unwantedIndex = player.unwanted.indexOf(gameId);
+  
+  if (unwantedIndex > -1) {
+    // Remove from unwanted
+    player.unwanted.splice(unwantedIndex, 1);
   } else {
+    // Add to unwanted and remove from favorites if present
     player.unwanted.push(gameId);
+    if (favIndex > -1) {
+      player.favorites.splice(favIndex, 1);
+    }
   }
   
   return newStorageData;
